@@ -24,14 +24,28 @@ plt.close()
 
 #condición inicial
 data_PDE_init = np.genfromtxt('init.dat')
+fig = plt.figure()
+ax = fig.gca(projection = '3d')
+x = np.arange(0.0, 1.0, 0.01)
+y = np.arange(0.0, 1.0, 0.01)
+x, y = np.meshgrid(x, y)
+z = data_PDE_init
+ax.plot_surface(x, y, z)
+fig.suptitle('Condición inicial')
+fig.savefig('PDE_initial.pdf')
+plt.clf()
+plt.close()
+
+#fixed
 data_PDE_fixed = np.genfromtxt('data_PDE_fixed.dat')
 fig = plt.figure()
 ax = fig.gca(projection = '3d')
 x = np.arange(0.0, 1.0, 0.01)
 y = np.arange(0.0, 1.0, 0.01)
 x, y = np.meshgrid(x, y)
-z1 = data_PDE_init
-z2 = data_PDE_fixed
-
-ax.plot_surface(x, y, z2)
-fig.savefig('PDE_initial.pdf')
+z = data_PDE_fixed
+ax.plot_surface(x, y, z)
+fig.suptitle('Condición inicial')
+fig.savefig('PDE_fixed.pdf')
+plt.clf()
+plt.close()

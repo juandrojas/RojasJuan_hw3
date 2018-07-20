@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 #include <math.h>
 
 using namespace std;
@@ -43,6 +42,7 @@ int main() {
     }
     i++;
   }
+  file.close();
   //memoria para el vector inicial
   u_initial.resize(nx, vector<double>(ny));
 
@@ -110,14 +110,14 @@ int main() {
     }
   }
 
-  // impresión de datos
+  //guardamos los datos
+  std::ofstream file_fixed("data_PDE_fixed.dat");
   for (int i = 0; i < nx; i++) {
     for (int j = 0; j < ny; j++) {
-      std::cout << u_future[i][j] << " ";
+      file_fixed << u_future[i][j] << " ";
     }
-    std::cout << std::endl;
+    file_fixed << "\n";
   }
-
-
+  file_fixed.close();
   return 0;
 }

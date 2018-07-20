@@ -1,6 +1,10 @@
 #include <iostream>
 #include <math.h>
 #include <valarray>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 //parámetros
 const double m = 2.5;
@@ -11,7 +15,7 @@ const double B_z = 3.0;
 std::valarray<double> B(3);
 
 //longitud de la simulación
-const double t_f = 5;
+const double t_f = 10.0;
 const double h = 0.001;
 const int N = int(t_f/h);
 
@@ -49,8 +53,6 @@ int main() {
   v[0][1] = y_dot_0;
   v[0][2] = z_dot_0;
 
-  std::cout << 0.0 << " " << r[0][0] << " " << r[0][1]<< " " << r[0][2] << '\n';
-
   //Runge_Kutta
   for (int n = 1; n < N; n++) {
 
@@ -71,7 +73,10 @@ int main() {
 		r[n] = r[n-1] + 1.0/6.0*(k1_1 + 2.0*k2_1 + 2.0*k3_1 + k4_1);
 		v[n] = v[n-1] + 1.0/6.0*(k1_2 + 2.0*k2_2 + 2.0*k3_2 + k4_2);
 
-    std::cout << t[n] << " " << r[n][0] << " " << r[n][1]<< " " << r[n][2] << '\n';
+    //impresión de datos
+    for (int n = 0; n < N; n++) {
+      std::cout << t[n] << " " << r[n][0] << " " << r[n][1] << " " << r[n][2] << "\n";
+    }
 
   }
 

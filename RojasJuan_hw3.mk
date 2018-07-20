@@ -1,4 +1,4 @@
-all : PDE_initial.pdf ODE.pdf
+all : PDE_initial.pdf PDE_fixed.pdf ODE.pdf
 
 ODE.pdf : data_ODE.dat RojasJuan_Plots_hw3.py
 	python3 RojasJuan_Plots_hw3.py
@@ -12,4 +12,4 @@ PDE_initial.pdf : data_PDE_fixed.dat RojasJuan_Plots_hw3.py
 
 data_PDE_fixed.dat: RojasJuan_PDE.cpp
 	g++ $^
-	./a.out > data_PDE_fixed.dat
+	./a.out
