@@ -11,7 +11,7 @@ const double B_z = 3.0;
 std::valarray<double> B(3);
 
 //longitud de la simulación
-const double t_f = 10;
+const double t_f = 5;
 const double h = 0.001;
 const int N = int(t_f/h);
 
