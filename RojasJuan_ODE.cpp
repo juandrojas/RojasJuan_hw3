@@ -73,12 +73,15 @@ int main() {
 		r[n] = r[n-1] + 1.0/6.0*(k1_1 + 2.0*k2_1 + 2.0*k3_1 + k4_1);
 		v[n] = v[n-1] + 1.0/6.0*(k1_2 + 2.0*k2_2 + 2.0*k3_2 + k4_2);
 
-    //impresión de datos
-    for (int n = 0; n < N; n++) {
-      std::cout << t[n] << " " << r[n][0] << " " << r[n][1] << " " << r[n][2] << "\n";
-    }
-
   }
+  //impresión de datos
+  std::ofstream fileODE("data_ODE.dat");
+  for (int n = 0; n < N; n++) {
+    fileODE << t[n] << " " << r[n][0] << " " << r[n][1] << " " << r[n][2] << "\n";
+  }
+  fileODE.close();
+
+  return 0;
 
 }
 
