@@ -22,6 +22,47 @@
 \begin{document}
 	\maketitle
 	\section{ODE}
+	En esta sección resolvemos numéricamente la ecuación diferencial dada por
+	\begin{align*}
+		m\ddot{r} = q\dot{r}\times \vec{B}
+	\end{align*}
+	dónde $r(t) \in \mathbb{R}^3$ determina la posición de una partícula con carga $q$ y masa $m$, bajo la acción de un campo magnético $\vec{B}$. Para esta simulación utilizamos el método de Runge-Kutta. La trayectoria de la partícula desde $t = 0$ a $t = 10s$ es la siguiente:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{ODE.pdf}
+		\caption{Trayectoria de la Partícula desde $t=0$ y $t=10s$}
+		\label{fig:ODE}
+	\end{figure}
+	Las siguientes son gráficas adicionales que detallan específicamente algunas de las coordenadas de la trayectoria.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{ODE_additional.pdf}
+		\caption{Gráficas adicionales}
+		\label{fig:ODE_additional}
+	\end{figure}
+	\section{PDE}
+	El objetivo de esta sección es resolver numéricamente la ecuación diferencial parcial de la membrana de un tambor dada por
+	\begin{align*}
+		\frac{\partial^2 \Phi(t,x,y)}{\partial t^2} = c^2\left(\frac{\partial^2 \Phi(t,x,y)}{\partial x^2} + \frac{\partial^2 \Phi(t,x,y)}{\partial y^2}\right)
+	\end{align*}
+	usando el método de diferencias finitas para dos distintas condiciones de frontera. Reduciendo se obtiene la expresión:
+	\begin{align*}
+		\Phi^{k+1}_{i,j} = \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i+1,j}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i-1,1}^{k}\right) + \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i,j+1}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i,j-1}^{k}\right) + 2\Phi_{i,j}^{k} - \Phi_{i,j}^{k}
+	\end{align*}
+	donde los índices $i$ indican la posición en $x$, el índice $j$ la posición en $y$ y el índice $k$ la posición temporal. Los parámetros que usamos son $\Delta x = 0.01m = \Delta y$, $c=300 m/s$ en una membrana cuadrada de longitud $L=1m$. Note que para estabilidad de la ecuación diferencial necesitamos que $\Delta t < \frac{\Delta x}{c}$, en nuestro caso usamos $\Delta t =  \frac{\Delta x}{2c}$. En primer lugar, graficamos es estado inicial de la membrana:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{PDE_initial.pdf}
+		\caption{Estado inicial de la membrana}
+		\label{fig:PDE_initiall}
+	\end{figure}
+	\subsection{Bordes de la membrana fija}
+	En este caso, nuestra condición de frontera es con los bordes de la membrana fija. El estado de la membrana en $t=60ms$ es el siguiente:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{PDE_fixed.pdf}
+		\caption{Estado de la membrana en $t=60ms$}
+		\label{fig:pdefixed}
+	\end{figure}
 	
-
 \end{document}
