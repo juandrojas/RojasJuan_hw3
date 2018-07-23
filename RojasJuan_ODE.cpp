@@ -75,7 +75,7 @@ int main() {
 
   }
   //impresión de datos
-  std::ofstream fileODE("data_ODE.dat");
+  std::ofstream fileODE("ODE.dat");
   for (int n = 0; n < N; n++) {
     fileODE << t[n] << " " << r[n][0] << " " << r[n][1] << " " << r[n][2] << "\n";
   }

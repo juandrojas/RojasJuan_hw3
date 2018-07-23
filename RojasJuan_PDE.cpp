@@ -85,7 +85,7 @@ int main() {
     }
   }
   int aux_sum = 1;
-  std::ofstream trans_cut_fixed("data_PDE_fixed_cut.dat");
+  std::ofstream trans_cut_fixed("PDE_fixed_cut.dat");
 
   for (int i = 0; i < ny; i++) {
     trans_cut_fixed << u_past[i][50] << " ";
@@ -135,7 +135,7 @@ int main() {
   trans_cut_fixed.close();
 
   //guardamos los datos
-  std::ofstream file_fixed("data_PDE_fixed.dat");
+  std::ofstream file_fixed("PDE_fixed.dat");
   for (int i = 0; i < ny; i++) {
     for (int j = 0; j < nx; j++) {
       file_fixed << u_future[i][j] << " ";
@@ -187,7 +187,7 @@ int main() {
 
     //cortes transversales
     aux_sum = 1;
-    std::ofstream trans_cut_free("data_PDE_free_cut.dat");
+    std::ofstream trans_cut_free("PDE_free_cut.dat");
 
     for (int i = 0; i < ny; i++) {
       trans_cut_free<< u_past[i][50] << " ";
@@ -261,7 +261,7 @@ int main() {
     trans_cut_free.close();
 
     //guardamos los datos
-    std::ofstream file_free("data_PDE_free.dat");
+    std::ofstream file_free("PDE_free.dat");
     for (int i = 0; i < ny; i++) {
       for (int j = 0; j < nx; j++) {
         file_free << u_future[i][j] << " ";

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
-data_ODE = np.genfromtxt('data_ODE.dat')
+data_ODE = np.genfromtxt('ODE.dat')
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
@@ -53,7 +53,7 @@ plt.clf()
 plt.close()
 
 #fixed
-data_PDE_fixed = np.genfromtxt('data_PDE_fixed.dat')
+data_PDE_fixed = np.genfromtxt('PDE_fixed.dat')
 fig = plt.figure()
 ax = fig.gca(projection = '3d')
 x = np.arange(0.0, 1.0, 0.01)
@@ -67,7 +67,7 @@ plt.clf()
 plt.close()
 
 #cortes transversales
-data_PDE_fixed_cut = np.genfromtxt('data_PDE_fixed_cut.dat')
+data_PDE_fixed_cut = np.genfromtxt('PDE_fixed_cut.dat')
 fig, axes = plt.subplots(5, 4, sharex = True, sharey= True, figsize=(9,12))
 for i in range(5):
     for j in range(4):
@@ -79,7 +79,7 @@ plt.clf()
 plt.close()
 
 #free
-data_PDE_free = np.genfromtxt('data_PDE_free.dat')
+data_PDE_free = np.genfromtxt('PDE_free.dat')
 fig = plt.figure()
 ax = fig.gca(projection = '3d')
 x = np.arange(0.0, 1.0, 0.01)
@@ -93,7 +93,7 @@ plt.clf()
 plt.close()
 
 #cortes transversales
-data_PDE_free_cut = np.genfromtxt('data_PDE_free_cut.dat')
+data_PDE_free_cut = np.genfromtxt('PDE_free_cut.dat')
 fig, axes = plt.subplots(5, 4, sharex = True, sharey= True, figsize=(9,12))
 for i in range(5):
     for j in range(4):

@@ -1,22 +1,21 @@
-RojasJuan_Resultados_hw3.pdf : PDE_initial.pdf PDE_fixed.pdf ODE.pdf ODE_additional.pdf RojasJuan_Resultados_hw3.tex
-	pdflatex $@
+RojasJuan_Resultados_hw3.pdf : RojasJuan_Resultados_hw3.tex ODE.pdf ODE_additional.pdf PDE_free.pdf PDE_fixed.pdf PDE_initial.pdf PDE_free_cut.pdf PDE_fixed_cut.pdf
+	pdflatex $<
 
 #crear archivos .dat si no existen antes de compilar el script .py
-RojasJuan_Plots_hw3.py : data_ODE.dat data_PDE_fixed.dat
+RojasJuan_Plots_hw3.py : ODE.dat PDE_free.dat PDE_fixed.dat PDE_free_cut.dat PDE_fixed_cut.dat
 
-ODE.pdf : data_ODE.dat RojasJuan_Plots_hw3.py
-	python3 RojasJuan_Plots_hw3.py
+ODE.pdf : RojasJuan_Plots_hw3.py ODE.dat
+	python3 $<
 
-data_ODE.dat : RojasJuan_ODE.cpp
-	g++ RojasJuan_ODE.cpp
-	./a.out > data_ODE.dat
-
-PDE_initial.pdf : data_PDE_fixed.dat RojasJuan_Plots_hw3.py
-	python3 RojasJuan_Plots_hw3.py
-
-data_PDE_fixed.dat: RojasJuan_PDE.cpp
-	g++ $^
+ODE.dat : RojasJuan_ODE.cpp
+	g++ $<
 	./a.out
+	rm a.out
 
-ODE_additional.pdf : data_ODE.dat RojasJuan_Plots_hw3.py
-	python3 RojasJuan_Plots_hw3.py
+PDE_%.pdf : RojasJuan_Plots_hw3.py PDE_%.dat
+	python3 $<
+
+PDE_%.dat : RojasJuan_PDE.cpp
+	g++ $<
+	./a.out
+	rm a.out
