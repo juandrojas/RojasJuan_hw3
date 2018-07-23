@@ -65,3 +65,41 @@ fig.suptitle('Estado en t=60ms', fontsize=18)
 fig.savefig('PDE_fixed.pdf')
 plt.clf()
 plt.close()
+
+#cortes transversales
+data_PDE_fixed_cut = np.genfromtxt('data_PDE_fixed_cut.dat')
+fig, axes = plt.subplots(5, 4, sharex = True, sharey= True, figsize=(9,12))
+for i in range(5):
+    for j in range(4):
+        pos = np.ravel_multi_index((i,j), (5,4))
+        axes[i][j].plot(y, data_PDE_fixed_cut[pos])
+fig.suptitle('Cortes transversales', fontsize=18)
+fig.savefig('PDE_fixed_cut.pdf')
+plt.clf()
+plt.close()
+
+#free
+data_PDE_free = np.genfromtxt('data_PDE_free.dat')
+fig = plt.figure()
+ax = fig.gca(projection = '3d')
+x = np.arange(0.0, 1.0, 0.01)
+y = np.arange(0.0, 1.0, 0.01)
+x, y = np.meshgrid(x, y)
+z = data_PDE_free
+ax.plot_surface(x, y, z)
+fig.suptitle('Estado en t=60ms', fontsize=18)
+fig.savefig('PDE_free.pdf')
+plt.clf()
+plt.close()
+
+#cortes transversales
+data_PDE_free_cut = np.genfromtxt('data_PDE_free_cut.dat')
+fig, axes = plt.subplots(5, 4, sharex = True, sharey= True, figsize=(9,12))
+for i in range(5):
+    for j in range(4):
+        pos = np.ravel_multi_index((i,j), (5,4))
+        axes[i][j].plot(y, data_PDE_free_cut[pos])
+fig.suptitle('Cortes transversales', fontsize=18)
+fig.savefig('PDE_free_cut.pdf')
+plt.clf()
+plt.close()
