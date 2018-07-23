@@ -93,7 +93,7 @@ int main() {
   trans_cut_fixed << "\n";
 
   // el resto de tiempos
-  for (int k = 1; k < nt; k++) {
+  for (int k = 1; k < nt-1; k++) {
 
     // condición de frontera
     for (int i = 0; i < ny; i++) {
@@ -204,28 +204,28 @@ int main() {
     }
 
     //el resto de tiempos
-    for (int k = 1; k < nt; k++) {
+    for (int k = 1; k < nt-1; k++) {
 
       //condición de frontera
       //esquinas
-      u_future[0][0] = 0.5*(pow(delta_t*c,2)*((2*u_present[1][0] - 2*u_present[0][0])/pow(delta_y,2) + (2*u_present[0][1] - 2*u_present[0][0])/pow(delta_x,2)) + 2*u_present[0][0]);
+      u_future[0][0] = pow(delta_t*c,2)*((2*u_present[1][0] - 2*u_present[0][0])/pow(delta_y,2) + (2*u_present[0][1] - 2*u_present[0][0])/pow(delta_x,2)) + 2*u_present[0][0] - u_past[0][0];
 
-      u_future[ny-1][0] = 0.5*(pow(delta_t*c,2)*((2*u_present[ny-2][0] - 2*u_present[ny-1][0])/pow(delta_y,2) + (2*u_present[ny-1][1] - 2*u_present[ny-1][0])/pow(delta_x,2)) + 2*u_present[ny-1][0]);
+      u_future[ny-1][0] = pow(delta_t*c,2)*((2*u_present[ny-2][0] - 2*u_present[ny-1][0])/pow(delta_y,2) + (2*u_present[ny-1][1] - 2*u_present[ny-1][0])/pow(delta_x,2)) + 2*u_present[ny-1][0] - u_past[ny-1][0];
 
-      u_future[ny-1][nx-1] = 0.5*(pow(delta_t*c,2)*((u_present[ny-2][nx-1] - 2*u_present[ny-1][nx-1])/pow(delta_y,2) + (u_present[ny-1][nx-2] - 2*u_present[ny-1][nx-1])/pow(delta_x,2)) + 2*u_present[ny-1][nx-1]);
+      u_future[ny-1][nx-1] = pow(delta_t*c,2)*((u_present[ny-2][nx-1] - 2*u_present[ny-1][nx-1])/pow(delta_y,2) + (u_present[ny-1][nx-2] - 2*u_present[ny-1][nx-1])/pow(delta_x,2)) + 2*u_present[ny-1][nx-1] - u_past[ny-1][nx-1];
 
-      u_future[0][nx-1] = 0.5*(pow(delta_t*c,2)*((u_present[1][nx-1] - 2*u_present[0][nx-1])/pow(delta_y,2) + (u_present[0][nx-2] - 2*u_present[0][nx-1])/pow(delta_x,2)) + 2*u_present[0][nx-1]);
+      u_future[0][nx-1] = pow(delta_t*c,2)*((u_present[1][nx-1] - 2*u_present[0][nx-1])/pow(delta_y,2) + (u_present[0][nx-2] - 2*u_present[0][nx-1])/pow(delta_x,2)) + 2*u_present[0][nx-1] - u_past[0][nx-1];
 
       //resto de bordes
       for (int i = 1; i < ny-1; i++) {
-        u_future[i][0] = 0.5*(pow(delta_t*c,2)*((u_present[i+1][0] - 2*u_present[i][0] + u_present[i-1][0])/pow(delta_y,2) + (2*u_present[i][1] - 2*u_present[i][0])/pow(delta_x,2)) + 2*u_present[i][0]);
+        u_future[i][0] = pow(delta_t*c,2)*((u_present[i+1][0] - 2*u_present[i][0] + u_present[i-1][0])/pow(delta_y,2) + (2*u_present[i][1] - 2*u_present[i][0])/pow(delta_x,2)) + 2*u_present[i][0] - u_past[i][0];
 
-        u_future[i][nx-1] = 0.5*(pow(delta_t*c,2)*((u_present[i+1][nx-1] - 2*u_present[i][nx-1] + u_present[i-1][nx-1])/pow(delta_y,2) + (2*u_present[i][nx-2] - 2*u_present[i][nx-1])/pow(delta_x,2)) + 2*u_present[i][nx-1]);
+        u_future[i][nx-1] = pow(delta_t*c,2)*((u_present[i+1][nx-1] - 2*u_present[i][nx-1] + u_present[i-1][nx-1])/pow(delta_y,2) + (2*u_present[i][nx-2] - 2*u_present[i][nx-1])/pow(delta_x,2)) + 2*u_present[i][nx-1] - u_past[i][nx-1];
       }
       for (int j = 0; j < ny-1; j++) {
-        u_future[0][j] = 0.5*(pow(delta_t*c,2)*((2*u_present[1][j] - 2*u_present[0][j])/pow(delta_y,2) + (u_present[0][j+1] - 2*u_present[0][j] + u_present[0][j-1])/pow(delta_x,2)) + 2*u_present[0][j]);
+        u_future[0][j] = pow(delta_t*c,2)*((2*u_present[1][j] - 2*u_present[0][j])/pow(delta_y,2) + (u_present[0][j+1] - 2*u_present[0][j] + u_present[0][j-1])/pow(delta_x,2)) + 2*u_present[0][j] - u_past[0][j];
 
-        u_future[ny-1][j] = 0.5*(pow(delta_t*c,2)*((2*u_present[ny-2][j] - 2*u_present[ny-1][j])/pow(delta_y,2) + (u_present[ny-1][j+1] - 2*u_present[ny-1][j] + u_present[ny-1][j-1])/pow(delta_x,2)) + 2*u_present[ny-1][j]);
+        u_future[ny-1][j] = pow(delta_t*c,2)*((2*u_present[ny-2][j] - 2*u_present[ny-1][j])/pow(delta_y,2) + (u_present[ny-1][j+1] - 2*u_present[ny-1][j] + u_present[ny-1][j-1])/pow(delta_x,2)) + 2*u_present[ny-1][j] - u_past[ny-1][j];
       }
 
 
