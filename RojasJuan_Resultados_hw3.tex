@@ -26,7 +26,7 @@
 	\begin{align*}
 		m\ddot{r} = q\dot{r}\times \vec{B}
 	\end{align*}
-	dónde $r(t) \in \mathbb{R}^3$ determina la posición de una partícula con carga $q$ y masa $m$, bajo la acción de un campo magnético $\vec{B}$. Para esta simulación utilizamos el método de Runge-Kutta. La trayectoria de la partícula desde $t = 0$ a $t = 10s$ es la siguiente:
+	dónde $r(t) \in \mathbb{R}^3$ determina la posición de una partícula con carga $q$ y masa $m$, bajo la acción de un campo magnético $\vec{B}$. Para esta simulación utilizamos el método de Runge-Kutta. Para unas condiciones iniciales $r(0) = (1.0, 0.0, 0.0)$,  $\dot{r}(0) = (0.0, 1.0, 2.0)$ y un campo magnético $\vec{B} = (0.0, 0.0, 3.0)$ la trayectoria de la partícula desde $t = 0$ a $t = 10s$ es la siguiente:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{ODE.pdf}
@@ -42,20 +42,29 @@
 	\end{figure}
 	\section{PDE}
 	El objetivo de esta sección es resolver numéricamente la ecuación diferencial parcial de la membrana de un tambor dada por
-	\begin{align*}
+	\begin{align}\label{finite_difference}
 		\frac{\partial^2 \Phi(t,x,y)}{\partial t^2} = c^2\left(\frac{\partial^2 \Phi(t,x,y)}{\partial x^2} + \frac{\partial^2 \Phi(t,x,y)}{\partial y^2}\right)
-	\end{align*}
+	\end{align}
 	usando el método de diferencias finitas para dos distintas condiciones de frontera. Reduciendo se obtiene la expresión:
 	\begin{align*}
-		\Phi^{k+1}_{i,j} = \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i+1,j}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i-1,1}^{k}\right) + \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i,j+1}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i,j-1}^{k}\right) + 2\Phi_{i,j}^{k} - \Phi_{i,j}^{k}
+		\Phi^{k+1}_{i,j} = \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i+1,j}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i-1,1}^{k}\right) + \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i,j+1}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i,j-1}^{k}\right) + 2\Phi_{i,j}^{k} - \Phi_{i,j}^{k-1}
 	\end{align*}
-	donde los índices $i$ indican la posición en $x$, el índice $j$ la posición en $y$ y el índice $k$ la posición temporal. Los parámetros que usamos son $\Delta x = 0.01m = \Delta y$, $c=300 m/s$ en una membrana cuadrada de longitud $L=1m$. Note que para estabilidad de la ecuación diferencial necesitamos que $\Delta t < \frac{\Delta x}{c}$, en nuestro caso usamos $\Delta t =  \frac{\Delta x}{2c}$. En primer lugar, graficamos es estado inicial de la membrana:
+	donde los índices $i$ indican la posición en $y$, el índice $j$ la posición en $x$ y el índice $k$ la posición temporal. Los parámetros que usamos son $\Delta x = 0.01m = \Delta y$, $c=300 m/s$ en una membrana cuadrada de longitud $L=1m$. Note que para estabilidad de la ecuación diferencial necesitamos que $\Delta t < \frac{\Delta x}{c}$, en nuestro caso usamos $\Delta t =  \frac{\Delta x}{10c}$. En primer lugar, graficamos es estado inicial de la membrana:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{PDE_initial.pdf}
 		\caption{Estado inicial de la membrana}
 		\label{fig:PDE_initiall}
 	\end{figure}
+	Note que (\ref{finite_difference}) revela que para obtener el estado de la membrana en el siguiente instante de tiempo a la condición inicial; entonces, usamos el hecho de que la membrana inicia con velocidad inicial cero, por lo tanto:
+	\begin{align*}
+		\Phi^1_{i,j} = \Phi^{-1}_{i,j}
+	\end{align*}
+	De aquí reemplazando en (\ref{finite_difference}) se obtiene:
+	\begin{align*}
+		\Phi^{k+1}_{i,j} = \frac{1}{2}\left(\frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i+1,j}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i-1,1}^{k}\right) + \frac{(c\Delta t)^2}{(\Delta y^2)}\left(\Phi_{i,j+1}^{k} - 2\Phi_{i,j}^{k} + \Phi_{i,j-1}^{k}\right) + 2\Phi_{i,j}^{k}\right)
+	\end{align*}
+	Usamos la anterior para calcular el primer instante de tiempo.
 	\subsection{Bordes de la membrana fija}
 	En este caso, nuestra condición de frontera es con los bordes de la membrana fija. El estado de la membrana en $t=60ms$ es el siguiente:
 	\begin{figure}[H]
@@ -64,5 +73,34 @@
 		\caption{Estado de la membrana en $t=60ms$}
 		\label{fig:pdefixed}
 	\end{figure}
-	
+	Para observar detalladamente la evolución de la membrana incluimos varias gráficas de cortes transversales en $x = L/2$ (no están espaciadas cada 10 unidades de tiempo, pues eso nos daría un número exagerado de gráficas, simplemente están igualmente espaciadas temporalmente de tal forma que obtengamos 20 gráficas). 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{PDE_fixed_cut.pdf}
+		\caption{Cortes transversales del estado de la membrana en $x = L/2$}
+		\label{fig:pdefixedtranscuts}
+	\end{figure}
+	\subsection{Bordes de la membrana libres}
+	En este caso, nuestra condición de frontera es con los bordes de la membrana libres. Es decir, la derivada en los bordes respecto a la variable perpendicular al borde es cero. Por lo tanto:
+	\begin{align*}
+	\Phi_{i,-1}^k &= \Phi_{i,1}^k \\
+	\Phi_{i,nx -2}^k &= \Phi_{i,nx}^k \\ 
+	\Phi_{-1, j}^k &= \Phi_{1, j}^k \\ 
+	\Phi_{ny - 2, j}^k &= \Phi_{ny, j}^k 
+	\end{align*}
+	De esta forma calculamos el valor de la onda en los bordes reemplazando en (\ref{finite_difference}). El estado de la membrana en $t=60ms$ es el siguiente:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{PDE_free.pdf}
+		\caption{Estado de la membrana en $t=60ms$}
+		\label{fig:pdefree}
+	\end{figure}
+	Note que en comparación a (Figura \ref{fig:pdefixed}) la amplitud es mucho menor; pues el movimiento de los bordes consume energía de la onda. Además los bordes poseen movimiento, como esperábamos. Veamos ahora los cortes transversales.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{PDE_free_cut.pdf}
+		\caption{Cortes transversales del estado de la membrana en $x = L/2$}
+		\label{fig:pdefreetranscuts}
+	\end{figure}
+	Aquí es fácil detectar como la onda va perdiendo energía conforme avanza el tiempo a diferencia de (Figura \ref{fig:pdefixedtranscuts}). Además, se puede ver también como la membrana al tener los bordes libres permite que la onda se escape en el transcurso del tiempo.
 \end{document}
